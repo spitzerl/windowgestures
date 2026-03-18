@@ -4,14 +4,23 @@ Window Gestures is GNOME Shell extension for managing window with touchpad gestu
 Support up to gnome 49.
 
 ## Installation
-*Gnome extension repository don't support Gnome 49*
-### Manually
+
+[Gnome extension repository version](https://extensions.gnome.org/extension/6343/window-gestures/) don't support Gnome 49
+
+### Manually
+
 **Clone the repository and enter it**
+
 `git clone https://github.com/spitzerl/windowgestures && cd windowgestures`
+
 **Run the building script**
+
 `./build.sh`
+
 **Then install the generated zip**
+
 `gnome-extensions install windowgestures@extension.amarullz.com.zip`
+
 Restart your session and then open your extension manager to activate it.
 <!--[![Get from GNOME Extension](./gext.svg)](https://extensions.gnome.org/extension/6343/window-gestures/)-->
 
