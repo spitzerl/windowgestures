@@ -21,7 +21,6 @@ import Meta from 'gi://Meta';
 import St from 'gi://St';
 import Shell from 'gi://Shell';
 import Gio from 'gi://Gio';
-import Mtk from 'gi://Mtk';
 
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import { Extension } from 'resource:///org/gnome/shell/extensions/extension.js';
@@ -558,7 +557,7 @@ class Manager {
             return;
         }
         global.window_manager.emit("show-tile-preview",
-            global.display.get_focus_window(), new Mtk.Rectangle(
+            global.display.get_focus_window(), new Meta.Rectangle(
                 { x: rx, y: ry, width: rw, height: rh }
             )
             , this._monitorId
@@ -1039,7 +1038,7 @@ class Manager {
             }
             if (setmove) {
                 if (this._targetWindow.allows_move() &&
-                    !this._targetWindow.is_maximized()) {
+                    !this._targetWindow.get_maximized()) {
                     this._edgeAction = WindowEdgeAction.MOVE;
                 }
             }
@@ -1101,7 +1100,7 @@ class Manager {
                             let holdMove = this._getTapHoldMove();
 
                             if (!allowMove || holdMove) {
-                                if (!this._targetWindow.is_maximized() &&
+                                if (!this._targetWindow.get_maximized() &&
                                     !this._targetWindow.isTiled) {
                                     this._edgeGestured = 1;
                                 }
@@ -1112,7 +1111,7 @@ class Manager {
                             else if (
                                 !this._edgeGestured &&
                                 !this._targetWindow.is_fullscreen() &&
-                                !this._targetWindow.is_maximized() &&
+                                !this._targetWindow.get_maximized() &&
                                 this._targetWindow.allows_move()) {
                                 this._edgeAction = WindowEdgeAction.MOVE;
                                 return this._swipeUpdateMove();
@@ -1331,7 +1330,7 @@ class Manager {
             if (this._isEdge(WindowEdgeAction.MOVE_SNAP_TOP)) {
                 if (this._targetWindow.can_maximize()) {
                     this._resetWinPos();
-                    this._targetWindow.set_maximize_flags(Meta.MaximizeFlags.BOTH);
+                    this._targetWindow.maximize(Meta.MaximizeFlags.BOTH);
                 }
             }
             else if (this._isEdge(WindowEdgeAction.MOVE_SNAP_LEFT)) {
@@ -1551,7 +1550,7 @@ class Manager {
                         activeWin = global.display.get_focus_window();
                     }
                     if (activeWin && ((activeWin.allows_move() &&
-                        !activeWin.is_maximized()) || !isWin)) {
+                        !activeWin.get_maximized()) || !isWin)) {
                         activeWin.activate(
                             Meta.CURRENT_TIME
                         );
@@ -2503,7 +2502,7 @@ class Manager {
             }
 
             let winCanMax = activeWin.allows_move() && activeWin.can_maximize();
-            let winIsMaximized = activeWin.is_maximized();
+            let winIsMaximized = activeWin.get_maximized();
             let winMaxed = Meta.MaximizeFlags.BOTH == winIsMaximized;
             if (activeWin.isTiled) {
                 winIsMaximized = Meta.MaximizeFlags.VERTICAL;
@@ -2609,7 +2608,7 @@ class Manager {
                         }
                         if (this._actionWidgets[wid] && (progress > 0)) {
                             if (ui == 1) {
-                                activeWin.set_maximize_flags(Meta.MaximizeFlags.BOTH);
+                                activeWin.maximize(Meta.MaximizeFlags.BOTH);
                             }
                             else if (ui == 2) {
                                 this._setSnapWindow(0);
@@ -2648,7 +2647,7 @@ class Manager {
                             }
                             else if (ui == 6) {
                                 // restore
-                                activeWin.set_unmaximize_flags(
+                                activeWin.unmaximize(
                                     Meta.MaximizeFlags.BOTH
                                 );
                                 if (activeWin.isTiled) {
