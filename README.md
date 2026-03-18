@@ -7,7 +7,7 @@ Support up to gnome 49.
 
 [Gnome extension repository version](https://extensions.gnome.org/extension/6343/window-gestures/) don't support Gnome 49
 
-### Manually
+### Manually
 
 **Clone the repository and enter it**
 
